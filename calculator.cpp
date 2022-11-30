@@ -6,43 +6,78 @@
 // To calculate the answer depending on the symbol used. Returns
 // This back to main().
 
+#include <cmath>
 #include <iostream>
 #include <string>
 
 // To calculate the mark
-float calculation(char symbol, float userNumber1, float userNumber2) {
+double calculation(char symbol, float userNumber1, float userNumber2) {
+    // Calculation variable
     float calculation = 0;
 
+    // IF ELSE statement to choose the proper calculation
     if (symbol == '+') {
         float calculation = userNumber1 + userNumber2;
+        return calculation;
     } else if (symbol == '-') {
         float calculation = userNumber1 - userNumber2;
+        return calculation;
     } else if (symbol == '*') {
         float calculation = userNumber1 * userNumber2;
+        return calculation;
     } else if (symbol == '/') {
         float calculation = userNumber1 / userNumber2;
+        return calculation;
     } else if (symbol == '%') {
-        double calculation = userNumber1 % userNumber2;
+        float calculation = fmod(userNumber1, userNumber2);
+        return calculation;
     } else {
         std::cout << "Please enter a valid symbol!";
+        return calculation;
     }
-    return calculation;
 }
 
 int main() {
     // Variables for the symbol and numbers user input, as well as
     // The answer calculation
-    char symbol, answer;
+    char symbolUserInput;
     std::string numberUserInput1String, numberUserInput2String;
-    double numberUserInput1, numberUserInput2;
+    float numberUserInput1, numberUserInput2;
 
     // Title of the program
     std::cout << "Calculator\n";
+
+    // User input for the symbol and numbers
+    std::cout << "Please enter the calculation sign (+,-,*,/,%): ";
+    std::cin >> symbolUserInput;
+    std::cout << "Enter the first number: ";
+    std::cin >> numberUserInput1String;
+    std::cout << "Enter the second number: ";
+    std::cin >> numberUserInput2String;
 
     // Try Catch to make sure the number inputs are valid number
     try {
         numberUserInput1 = stof(numberUserInput1String);
         numberUserInput2 = stof(numberUserInput2String);
-        calculation(symbol, numberUserInput1, numberUserInput2);
+
+        // IF statement to make sure the symbol input is right
+        if (symbolUserInput == '+' || symbolUserInput == '-' ||
+        symbolUserInput == '*' || symbolUserInput == '/'
+        || symbolUserInput == '%') {
+            float answer;
+            answer = calculation(symbolUserInput, numberUserInput1,
+            numberUserInput2);
+            // Displaying the answer
+            std::cout << numberUserInput1 << " " << symbolUserInput << " "
+            << numberUserInput2
+            << " = " << answer << "\n";
+
+            // ELSE to display to the user to enter a valid sign
+        } else {
+            std::cout << "Please enter one of the 5 symbols! \n";
+        }
+        // Telling the user to enter a valid number
+    } catch (std::invalid_argument) {
+        std::cout << "Please enter a valid number! \n";
     }
 }
